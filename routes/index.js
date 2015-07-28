@@ -27,6 +27,14 @@ function router(app) {
             console.log('POST', status, original_filename, identifier);
             console.log('111111111111111111111111111');
             console.log(filename);
+
+            gm(filename)
+                .resize(100, 100)
+                .noProfile()
+                .write('public/image/resize.png', function (err) {
+                    if (!err) console.log('done');
+                    console.log('error');
+                });
             res.send(status, {
                 // NOTE: Uncomment this funciton to enable cross-domain request.
                 //'Access-Control-Allow-Origin': '*'

@@ -11,6 +11,7 @@ var MongoStore = require('connect-mongo')(session);
 var routes = require('./routes/index');
 var multipart = require('connect-multiparty');
 
+//var multer = require('multer');
 
 var app = express();
 
@@ -25,7 +26,21 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(multipart());
+
+//app.use(multipart(({
+//    dest: './public/images',
+//    rename: function (fieldname, filename) {
+//        return filename;
+//    }
+//})));
+
+
+//app.use(multer({
+//    dest: './public/images',
+//    rename:function (fieldname,filename){
+//        return filename;
+//    }
+//}));
 
 
 app.use(session({
@@ -43,7 +58,7 @@ app.use(session({
 routes(app);
 
 app.listen(app.get('port'), function () {
-    console.log('barbecue-shop project server start on :' + app.get('port'));
+    console.log('upload-image project server start on :' + app.get('port'));
 });
 
 // catch 404 and forward to error handler
