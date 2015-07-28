@@ -10,6 +10,7 @@ html
 
    head
 
+      link(rel="stylesheet" href="css/style.css")
       title 拖拽上传图片
 
 
@@ -19,4 +20,35 @@ html
       h1 拖拽上传图片
 
 
+      //<div class="resumable-drop" ondragenter="jQuery(this).addClass('resumable-dragover');" ondragend="jQuery(this).removeClass('resumable-dragover');" ondrop="jQuery(this).removeClass('resumable-dragover');">
+      //Drop video files here to upload or <a class="resumable-browse"><u>select from your computer</u></a>
+      //</div>
+
+      div(class="resumable-drop" ondragenter="jQuery(this).addClass('resumable-dragover');" ondragend="jQuery(this).removeClass('resumable-dragover');" ondrop="jQuery(this).removeClass('resumable-dragover');")
+         span 把图片拖到这里
+         a(class="resumable-browse") 选择本地文件
+
+
+
+      div.resumable-progress
+         table
+            tr
+               td(style="width:100%")
+                  div.progress-container
+                     div.progress-bar
+               td(class="progress-text" nowrap="nowrap")
+               td(class="progress-pause" nowrap="nowrap")
+
+      ul.resumable-list
+
+
       a(href="/test") test
+
+
+
+
+      script(src="bower_components/jquery/dist/jquery.js")
+
+      script(src="js/resumable.js")
+      script(src="js/index.js")
+

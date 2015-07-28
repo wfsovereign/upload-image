@@ -9,6 +9,8 @@ var setting = require('./setting');
 var MongoStore = require('connect-mongo')(session);
 
 var routes = require('./routes/index');
+var multipart = require('connect-multiparty');
+
 
 var app = express();
 
@@ -23,6 +25,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(multipart());
 
 
 app.use(session({
