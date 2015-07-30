@@ -27,12 +27,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-//app.use(multipart(({
-//    dest: './public/images',
-//    rename: function (fieldname, filename) {
-//        return filename;
-//    }
-//})));
+app.use(multipart());
 
 
 //app.use(multer({
