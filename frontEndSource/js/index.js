@@ -7,7 +7,8 @@ $(function (){
 
 function clearCache(){
     $('.get-file').children('img').remove();
-
+    $('.resumable-list').children().remove();
+    $('.resumable-progress').children().remove();
     $.post('/clearCache',function (data){
         alert(data.msg)
     })

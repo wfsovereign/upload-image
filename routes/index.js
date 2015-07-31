@@ -9,7 +9,7 @@ var fs = require("fs");
 //    client = redis.createClient();
 
 
-var saveImagePath = "public/image/";
+var saveImagePath = "src/image/";
 var filePath = '/tmp/image/';
 
 var compressionFilePath = null;
