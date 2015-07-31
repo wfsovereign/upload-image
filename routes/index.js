@@ -3,9 +3,13 @@
 var gm = require('gm').subClass({imageMagick: true});
 var resumable = require('./resumable-node.js')('/tmp/image/');
 var fs = require("fs");
+
+
 //var redis = require("redis"),
 //    client = redis.createClient();
 
+
+var saveImagePath = "public/image/";
 var filePath = '/tmp/image/';
 
 var compressionFilePath = null;
@@ -30,17 +34,9 @@ function router(app) {
 
     app.post('/upload', function (req, res) {
 
-        // console.log(req);
-
-        console.log("post upload 111111111111");
         resumable.post(req, function (status, filename, original_filename, identifier) {
             console.log('POST', status, original_filename, identifier);
-            console.log('111111111111111111111111111');
-            console.log(req.session);
             console.log(filename);
-
-
-            var saveImagePath = "public/image/";
             var imagePath = filePath + identifier;
             var compressionFileName = "compression-" + filename;
 
@@ -51,41 +47,10 @@ function router(app) {
                 .write(saveImagePath + compressionFileName, function (err) {
                     if (!err) {
                         console.log('done');
-                        console.log('- - - - - - ');
-
-                        console.log(compressionFileName);
-
                         compressionFilePath = 'image/' + compressionFileName;
-
-                        //client.hmset('filePath',{filePath:'image/' + compressionFileName},function (err){
-                        //
-                        //    console.log('save');
-                        //    console.log(err);
-                        //});
-
-                        //client.hgetall('filePath',function (err,obj){
-                        //    console.log('show file path');
-                        //    console.log(obj)
-                        //});
-
-
-                        console.log('success');
                     }
                 });
-            
-            console.log('session');
-            console.log(req.session.filePath);
 
-            setTimeout(function (){
-                console.log('time out');
-                console.log(req.session.filePath);
-               req.session.filePath =  'image/' + compressionFileName;
-
-                console.log("set");
-                console.log(req.session.filePath);
-                
-                
-            },100);
 
             res.send(status, {
                 //NOTE: Uncomment this funciton to enable cross-domain request.
@@ -108,25 +73,74 @@ function router(app) {
             res.json({
                 status: "error",
                 msg: "缩略图获取失败"
-
             })
         }
     });
 
+    app.post('/clearCache', function (req, res) {
+        compressionFilePath = null;
 
-    app.get('/test', function (req, res) {
-        //res.render('index');
-        console.log('test');
-        gm('src/image/image.jpg')
-            .resize(100, 100)
-            .noProfile()
-            .write('public/image/resize.png', function (err) {
-                if (!err) console.log('done');
+        //fs.rmdir("../" + saveImagePath, function (err) {
+        //    if (err) {
+        //        console.log("删除失败");
+        //        res.json({
+        //            status: "error",
+        //            msg: "服务器缓存清除失败"
+        //        })
+        //    }
+        //
+        //    res.json({
+        //        status: "success",
+        //        msg: "文件缓存清除成功"
+        //    });
+        //});
 
+        //fs.rmdir("public/image",function (err){
+        //    fs.exists("public/image", function(exists){
+        //        console.log(exists ? "删除失败" : "删除成功");
+        //    });
+        //});
+        //
+        //fs.unlink("public/image/compression-background.png", function(err){
+        //    fs.exists(fileName, function(exists){
+        //        console.log(exists ? "删除失败" : "删除成功");
+        //    });
+        //});
+        //
+        //
+        //var fileName = "public/image/anps.txt";
+        //
+
+        var folder_exists = fs.existsSync("public/image");
+
+        if (folder_exists == true) {
+            var dirList = fs.readdirSync("public/image");
+            dirList.forEach(function (fileName) {
+                fs.unlinkSync("public/image/" + fileName);
             });
+        }
 
-        res.end();
-    });
+        //var content = "hello word\n";
+        //fs.appendFile(fileName,content,function(err){
+        //    if(err) throw err
+        //    console.log("success");
+        //});
+
+
+        //fs.unlink(fileName, function(err){
+        //    fs.exists(fileName, function(exists){
+        //        console.log(exists ? "删除失败" : "删除成功");
+        //    });
+        //});
+
+        //fs.readFile(fileName, function(err,data){
+        //    if(err) console.log(err);
+        //    console.log('file content');
+        //    console.log(data.toString());
+        //});
+
+
+    })
 
 
 }
