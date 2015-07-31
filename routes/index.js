@@ -18,8 +18,7 @@ function router(app) {
     app.post('/upload', function (req, res) {
 
         resumable.post(req, function (status, filename, original_filename, identifier) {
-            console.log('POST', status, original_filename, identifier);
-            console.log(filename);
+            console.log('POST', status, filename, original_filename, identifier);
             var imagePath = filePath + identifier;
             var compressionFileName = "compression-" + filename;
             gm(imagePath)
@@ -42,8 +41,6 @@ function router(app) {
     });
 
     app.post('/getCompressFilePath', function (req, res) {
-        console.log('file path');
-        console.log(compressionFilePath);
         if (compressionFilePath) {
             res.json({
                 status: "success",
@@ -61,17 +58,17 @@ function router(app) {
         compressionFilePath = null;
 
         var filePathNotSlash = saveImagePath.substring(0, saveImagePath.length - 1);
-        var folder_exists = fs.existsSync(filePathNotSlash);
+        var folderExists = fs.existsSync(filePathNotSlash);
 
-        if (folder_exists == true) {
+        if (folderExists == true) {
             var dirList = fs.readdirSync(filePathNotSlash);
             dirList.forEach(function (fileName) {
                 fs.unlinkSync(saveImagePath + fileName);
             });
         }
         res.json({
-            status:"success",
-            msg:"服务器缓存清除成功"
+            status: "success",
+            msg: "服务器缓存清除成功"
         });
 
     })
