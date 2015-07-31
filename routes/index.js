@@ -36,6 +36,7 @@ function router(app) {
         resumable.post(req, function (status, filename, original_filename, identifier) {
             console.log('POST', status, original_filename, identifier);
             console.log('111111111111111111111111111');
+            console.log(req.session);
             console.log(filename);
 
 
@@ -54,8 +55,7 @@ function router(app) {
 
                         console.log(compressionFileName);
 
-                        req.session.filePath = 'image/' + compressionFileName;
-                        console.log(req.session);
+                        compressionFilePath = 'image/' + compressionFileName;
 
                         //client.hmset('filePath',{filePath:'image/' + compressionFileName},function (err){
                         //
@@ -68,8 +68,6 @@ function router(app) {
                         //    console.log(obj)
                         //});
 
-
-                        console.log(req.sessionRedis);
 
                         console.log('success');
                     }
@@ -100,19 +98,19 @@ function router(app) {
 
     app.post('/getCompressFilePath', function (req, res) {
         console.log('file path');
-        console.log(req.session);
-        //if (req.session.filePath) {
-        //    res.json({
-        //        status: "success",
-        //        filePath: req.session.filePath
-        //    });
-        //} else {
-        //    res.json({
-        //        status: "error",
-        //        msg: "缩略图获取失败"
-        //
-        //    })
-        //}
+        console.log(compressionFilePath);
+        if (compressionFilePath) {
+            res.json({
+                status: "success",
+                filePath: compressionFilePath
+            });
+        } else {
+            res.json({
+                status: "error",
+                msg: "缩略图获取失败"
+
+            })
+        }
     });
 
 
