@@ -4,6 +4,7 @@ var gm = require('gm').subClass({imageMagick: true});
 var resumable = require('./resumable-node.js')('/tmp/image/');
 var fs = require("fs");
 
+var filePath = '/tmp/image/';
 
 function router(app) {
     app.get('/', function (req, res) {
@@ -31,25 +32,26 @@ function router(app) {
             console.log('111111111111111111111111111');
             console.log(filename);
 
-               //var stream = fs.createWriteStream(filename);
-               //resumable.write(identifier, stream);
-               //stream.on('data', function(data){
-               //    console.log("data =====");
-               //    console.log(data)
-               //});
-               //stream.on('end', function(){
-               //    console.log("end")
-               //
-               //});
+            //var stream = fs.createWriteStream(filename);
+            //resumable.write(identifier, stream);
+            //stream.on('data', function(data){
+            //    console.log("data =====");
+            //    console.log(data)
+            //});
+            //stream.on('end', function(){
+            //    console.log("end")
+            //
+            //});
 
+            var imagePath = filePath + identifier;
 
-            //gm(filename)
-            //    .resize(100, 100)
-            //    .noProfile()
-            //    .write('public/image/resize.png', function (err) {
-            //        if (!err) console.log('done');
-            //        console.log('error');
-            //    });
+            gm(imagePath)
+                .resize(100, 100)
+                .noProfile()
+                .write('public/image/resize.png', function (err) {
+                    if (!err) console.log('done');
+                    console.log('error');
+                });
             res.send(status, {
                 // NOTE: Uncomment this funciton to enable cross-domain request.
                 //'Access-Control-Allow-Origin': '*'
