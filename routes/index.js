@@ -111,20 +111,19 @@ function router(app) {
         //var fileName = "public/image/anps.txt";
         //
 
-        var folder_exists = fs.existsSync("public/image");
+        var filePahthNotSlash = saveImagePath.substring(0, saveImagePath.length - 1);
+        var folder_exists = fs.existsSync(filePahthNotSlash);
 
         if (folder_exists == true) {
-            var dirList = fs.readdirSync("public/image");
+            var dirList = fs.readdirSync(filePahthNotSlash);
             dirList.forEach(function (fileName) {
-                fs.unlinkSync("public/image/" + fileName);
+                fs.unlinkSync(saveImagePath + fileName);
             });
         }
-
-        //var content = "hello word\n";
-        //fs.appendFile(fileName,content,function(err){
-        //    if(err) throw err
-        //    console.log("success");
-        //});
+        res.json({
+            status:"success",
+            msg:"服务器缓存清除成功"
+        });
 
 
         //fs.unlink(fileName, function(err){
