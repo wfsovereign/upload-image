@@ -1,6 +1,6 @@
 module.exports={
     cookieSecret:"upload-image",
-    db:"barbecue-shop",
+    db:"upload-image",
     host:"localhost",
     port:"27017"
 };

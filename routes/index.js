@@ -3,8 +3,12 @@
 var gm = require('gm').subClass({imageMagick: true});
 var resumable = require('./resumable-node.js')('/tmp/image/');
 var fs = require("fs");
+//var redis = require("redis"),
+//    client = redis.createClient();
 
 var filePath = '/tmp/image/';
+
+var compressionFilePath = null;
 
 function router(app) {
     app.get('/', function (req, res) {
@@ -36,10 +40,7 @@ function router(app) {
 
 
             var saveImagePath = "public/image/";
-
             var imagePath = filePath + identifier;
-
-
             var compressionFileName = "compression-" + filename;
 
 
@@ -53,18 +54,40 @@ function router(app) {
 
                         console.log(compressionFileName);
 
-                        req.session.imagePath = 'image/' + compressionFileName;
+                        req.session.filePath = 'image/' + compressionFileName;
                         console.log(req.session);
+
+                        //client.hmset('filePath',{filePath:'image/' + compressionFileName},function (err){
+                        //
+                        //    console.log('save');
+                        //    console.log(err);
+                        //});
+
+                        //client.hgetall('filePath',function (err,obj){
+                        //    console.log('show file path');
+                        //    console.log(obj)
+                        //});
+
+
+                        console.log(req.sessionRedis);
 
                         console.log('success');
                     }
                 });
+            
+            console.log('session');
+            console.log(req.session.filePath);
 
+            setTimeout(function (){
+                console.log('time out');
+                console.log(req.session.filePath);
+               req.session.filePath =  'image/' + compressionFileName;
 
-            //res.render('index', {
-            //    status: "success",
-            //    fileName: compressionFileName
-            //});
+                console.log("set");
+                console.log(req.session.filePath);
+                
+                
+            },100);
 
             res.send(status, {
                 //NOTE: Uncomment this funciton to enable cross-domain request.
@@ -75,8 +98,21 @@ function router(app) {
         });
     });
 
-    app.post('/getCompressFile',function (req,res){
-        
+    app.post('/getCompressFilePath', function (req, res) {
+        console.log('file path');
+        console.log(req.session);
+        //if (req.session.filePath) {
+        //    res.json({
+        //        status: "success",
+        //        filePath: req.session.filePath
+        //    });
+        //} else {
+        //    res.json({
+        //        status: "error",
+        //        msg: "缩略图获取失败"
+        //
+        //    })
+        //}
     });
 
 
