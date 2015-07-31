@@ -10,43 +10,43 @@ html
 
     head
 
+        link(href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css",rel="stylesheet")
+        link(href="bower_components/bootstrap/dist/css/bootstrap.min.css",rel="stylesheet")
         link(rel="stylesheet" href="css/style.css")
+        link(rel="stylesheet" href="css/main.css")
         title 拖拽上传图片
 
 
 
-    body
-
-        h1 拖拽上传图片
-
-
-        //<div class="resumable-drop" ondragenter="jQuery(this).addClass('resumable-dragover');" ondragend="jQuery(this).removeClass('resumable-dragover');" ondrop="jQuery(this).removeClass('resumable-dragover');">
-        //Drop video files here to upload or <a class="resumable-browse"><u>select from your computer</u></a>
-        //</div>
-
-        div(class="resumable-drop" ondragenter="jQuery(this).addClass('resumable-dragover');" ondragend="jQuery(this).removeClass('resumable-dragover');" ondrop="jQuery(this).removeClass('resumable-dragover');")
-            span 把图片拖到这里
-            a(class="resumable-browse") 选择本地文件
+    body.container
 
 
 
-        div.resumable-progress
-            table
-                tr
-                    td(style="width:100%")
-                        div.progress-container
-                            div.progress-bar
-                    td(class="progress-text" nowrap="nowrap")
-                    td(class="progress-pause" nowrap="nowrap")
+        div.panel.panel-info
+            div.panel-heading
+                h2 拖拽上传图片
+            div.panel-body
+                div(class="resumable-drop" ondragenter="jQuery(this).addClass('resumable-dragover');" ondragend="jQuery(this).removeClass('resumable-dragover');" ondrop="jQuery(this).removeClass('resumable-dragover');")
+                    span 把图片拖到这里
+                    a(class="resumable-browse") 选择本地文件
 
-        ul.resumable-list
+            div.resumable-progress.container
+                table
+                    tr
+                        td
+                            div.progress-container
+                                div.progress-bar
+                        td(class="progress-text" nowrap="nowrap")
+                        td(class="progress-pause" nowrap="nowrap")
+            div.align-center
+                ul.resumable-list
+                div.get-file
+            div.align-center.separate-top
+                button.get-compression-file.btn.btn-success.separate-right 查看缩略图
+                button.clear-cache.btn.btn-danger.separate-right 清除缓存
 
-        div.get-file
 
 
-
-        button.get-compression-file 查看缩略图
-        button.clear-cache 清除缓存
 
 
 

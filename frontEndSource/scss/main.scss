@@ -1,0 +1,27 @@
+.resumable-browse:hover{
+  cursor: pointer;
+}
+
+.align-center{
+  text-align: center;
+}
+
+.separate-right{
+  margin-right: 5px;
+}
+
+.separate-top{
+  margin-top: 5px;
+}
+
+.resumable-progress{
+
+  table tr td {
+    width: 80%;
+  }
+
+  table tr td :first-child{
+    text-align: center;
+  }
+
+}
