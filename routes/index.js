@@ -8,8 +8,8 @@ var filePath = '/tmp/image/';
 
 function router(app) {
     app.get('/', function (req, res) {
-        res.render('index',{
-            status:"init"
+        res.render('index', {
+            status: "init"
         });
     });
 
@@ -47,23 +47,37 @@ function router(app) {
                 .resize(100, 100)
                 .noProfile()
                 .write(saveImagePath + compressionFileName, function (err) {
-                    if (!err) console.log('done');
+                    if (!err) {
+                        console.log('done');
+                        console.log('- - - - - - ');
+
+                        console.log(compressionFileName);
+
+                        req.session.imagePath = 'image/' + compressionFileName;
+                        console.log(req.session);
+
+                        console.log('success');
+                    }
                 });
 
 
-            //res.send(status, {
-            //     //NOTE: Uncomment this funciton to enable cross-domain request.
-            //    'Access-Control-Allow-Origin': '*'
+            //res.render('index', {
+            //    status: "success",
+            //    fileName: compressionFileName
             //});
 
-            res.redirect('index',{
-                status:"success",
-                fileName:compressionFileName
+            res.send(status, {
+                //NOTE: Uncomment this funciton to enable cross-domain request.
+                //'Access-Control-Allow-Origin': '*'
             });
+
 
         });
     });
 
+    app.post('/getCompressFile',function (req,res){
+        
+    });
 
 
     app.get('/test', function (req, res) {

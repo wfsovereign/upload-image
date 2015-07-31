@@ -42,22 +42,21 @@ html
         ul.resumable-list
 
 
-        -if(status == "init")
+        -if(status){
+            p= status
+            p= fileName
+
             div
-                p 这里将生成缩略图
+                img(src=fileName)
 
-        -else if(status == "success")
-            div
-                img(src='image' + fileName)
-
-        -else
-            div
-                p  生成缩略图失败
+        -}
 
 
 
+        a(href="/test") 查看缩略图
 
-        a(href="/test") test
+        div.get-image
+
 
 
 
