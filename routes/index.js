@@ -8,7 +8,9 @@ var filePath = '/tmp/image/';
 
 function router(app) {
     app.get('/', function (req, res) {
-        res.render('index');
+        res.render('index',{
+            status:"init"
+        });
     });
 
 
@@ -32,48 +34,36 @@ function router(app) {
             console.log('111111111111111111111111111');
             console.log(filename);
 
-            //var stream = fs.createWriteStream(filename);
-            //resumable.write(identifier, stream);
-            //stream.on('data', function(data){
-            //    console.log("data =====");
-            //    console.log(data)
-            //});
-            //stream.on('end', function(){
-            //    console.log("end")
-            //
-            //});
+
+            var saveImagePath = "public/image/";
 
             var imagePath = filePath + identifier;
+
+
+            var compressionFileName = "compression-" + filename;
+
 
             gm(imagePath)
                 .resize(100, 100)
                 .noProfile()
-                .write('public/image/resize.png', function (err) {
+                .write(saveImagePath + compressionFileName, function (err) {
                     if (!err) console.log('done');
-                    console.log('error');
                 });
-            res.send(status, {
-                // NOTE: Uncomment this funciton to enable cross-domain request.
-                //'Access-Control-Allow-Origin': '*'
+
+
+            //res.send(status, {
+            //     //NOTE: Uncomment this funciton to enable cross-domain request.
+            //    'Access-Control-Allow-Origin': '*'
+            //});
+
+            res.redirect('index',{
+                status:"success",
+                fileName:compressionFileName
             });
+
         });
     });
 
-//
-//// Handle uploads through Resumable.js
-//    app.post('/upload', function (req, res) {
-//
-//        // console.log(req);
-//
-//        resumable.post(req, function (status, filename, original_filename, identifier) {
-//            console.log('POST', status, original_filename, identifier);
-//
-//            res.send(status, {
-//                // NOTE: Uncomment this funciton to enable cross-domain request.
-//                //'Access-Control-Allow-Origin': '*'
-//            });
-//        });
-//    });
 
 
     app.get('/test', function (req, res) {

@@ -8,47 +8,62 @@ doctype html
 
 html
 
-   head
+    head
 
-      link(rel="stylesheet" href="css/style.css")
-      title 拖拽上传图片
-
-
-
-   body
-
-      h1 拖拽上传图片
-
-
-      //<div class="resumable-drop" ondragenter="jQuery(this).addClass('resumable-dragover');" ondragend="jQuery(this).removeClass('resumable-dragover');" ondrop="jQuery(this).removeClass('resumable-dragover');">
-      //Drop video files here to upload or <a class="resumable-browse"><u>select from your computer</u></a>
-      //</div>
-
-      div(class="resumable-drop" ondragenter="jQuery(this).addClass('resumable-dragover');" ondragend="jQuery(this).removeClass('resumable-dragover');" ondrop="jQuery(this).removeClass('resumable-dragover');")
-         span 把图片拖到这里
-         a(class="resumable-browse") 选择本地文件
+        link(rel="stylesheet" href="css/style.css")
+        title 拖拽上传图片
 
 
 
-      div.resumable-progress
-         table
-            tr
-               td(style="width:100%")
-                  div.progress-container
-                     div.progress-bar
-               td(class="progress-text" nowrap="nowrap")
-               td(class="progress-pause" nowrap="nowrap")
+    body
 
-      ul.resumable-list
+        h1 拖拽上传图片
 
 
-      a(href="/test") test
+        //<div class="resumable-drop" ondragenter="jQuery(this).addClass('resumable-dragover');" ondragend="jQuery(this).removeClass('resumable-dragover');" ondrop="jQuery(this).removeClass('resumable-dragover');">
+        //Drop video files here to upload or <a class="resumable-browse"><u>select from your computer</u></a>
+        //</div>
 
+        div(class="resumable-drop" ondragenter="jQuery(this).addClass('resumable-dragover');" ondragend="jQuery(this).removeClass('resumable-dragover');" ondrop="jQuery(this).removeClass('resumable-dragover');")
+            span 把图片拖到这里
+            a(class="resumable-browse") 选择本地文件
 
 
 
-      script(src="bower_components/jquery/dist/jquery.js")
+        div.resumable-progress
+            table
+                tr
+                    td(style="width:100%")
+                        div.progress-container
+                            div.progress-bar
+                    td(class="progress-text" nowrap="nowrap")
+                    td(class="progress-pause" nowrap="nowrap")
 
-      script(src="js/resumable.js")
-      script(src="js/index.js")
+        ul.resumable-list
+
+
+        -if(status == "init")
+            div
+                p 这里将生成缩略图
+
+        -else if(status == "success")
+            div
+                img(src='image' + fileName)
+
+        -else
+            div
+                p  生成缩略图失败
+
+
+
+
+        a(href="/test") test
+
+
+
+
+        script(src="bower_components/jquery/dist/jquery.js")
+
+        script(src="js/resumable.js")
+        script(src="js/index.js")
 
